@@ -15,8 +15,8 @@
 export PATH=/work/scitas-share/ddossant/xtb/6.4.1/intel-19.0.5/bin:$PATH
 export PATH=/work/scitas-share/ddossant/crest/2.12/intel-19.0.5:$PATH
 
-cpunr='64'
-memory='128000'
+cpunr='72'
+memory='288000'
 
 function is_bin_in_path {
      builtin type -P "$1" &> /dev/null
@@ -154,23 +154,23 @@ echo "#!/bin/bash
 module load gcc/11.3.0
 module load intel-mkl/2020.4.304
 ulimit -s unlimited
-export OMP_STACKSIZE=18G
+export OMP_STACKSIZE=4G
 export OMP_MAX_ACTIVE_LEVELS=1
-export OMP_NUM_THREADS=64,1
-export MKL_NUM_THREADS=64
+export OMP_NUM_THREADS=72,1
+export MKL_NUM_THREADS=72
 mkdir ${tmpdir}
 cd ${tmpdir}
 cp ${curdir}/${inpname} ${tmpdir}
 cp ${curdir}/.xcontrol.sample ${tmpdir}/.xcontrol.sample
 
-crest ${name}.xyz --gfn2//gfnff --mdlen x0.1 --notopol --noreftopo --cbonds --tnmd 298.15 --rthr 0.2 --ethr 0.1  --ewin 20.0 --cinp .xcontrol.sample -xnam /work/scitas-share/ddossant/xtb/6.4.1/intel-19.0.5/bin/xtb -T 2  -dry > ${loutput}
+crest ${name}.xyz --gfn2//gfnff --mdlen x0.1 --notopol --noreftopo --cbonds --tnmd 298.15 --rthr 0.2 --ethr 0.1  --ewin 20.0 --cinp .xcontrol.sample -xnam /work/scitas-share/ddossant/xtb/6.4.1/intel-19.0.5/bin/xtb -T 72  -dry > ${loutput}
 if [ ${checker} -eq 0 ]; then
    echo "Crest dry run seems to have terminated normally."
 else 
    echo "Dry run terminated abnormally. Check crest input line."
 fi
 
-crest ${name}.xyz --gfn2//gfnff --mdlen x0.1 --notopol --noreftopo --cbonds --tnmd 298.15 --rthr 0.2 --ethr 0.1  --ewin 20.0 --cinp .xcontrol.sample -xnam /work/scitas-share/ddossant/xtb/6.4.1/intel-19.0.5/bin/xtb -T 2  > ${loutput}
+crest ${name}.xyz --gfn2//gfnff --mdlen x0.1 --notopol --noreftopo --cbonds --tnmd 298.15 --rthr 0.2 --ethr 0.1  --ewin 20.0 --cinp .xcontrol.sample -xnam /work/scitas-share/ddossant/xtb/6.4.1/intel-19.0.5/bin/xtb -T 72  > ${loutput}
 if [ ${checker} -eq 0 ]; then
    echo "Crest seems to have terminated normally."
 else 
